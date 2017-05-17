@@ -1,0 +1,2692 @@
+<!doctype html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+
+    <title>libhoney API documentation</title>
+    <meta name="description" content="libhoney is a library to allow you to send events to Honeycomb from within
+your python application.
+..." />
+
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300' rel='stylesheet' type='text/css'>
+  
+  <style type="text/css">
+  
+* {
+  box-sizing: border-box;
+}
+/*! normalize.css v1.1.1 | MIT License | git.io/normalize */
+
+/* ==========================================================================
+   HTML5 display definitions
+   ========================================================================== */
+
+/**
+ * Correct `block` display not defined in IE 6/7/8/9 and Firefox 3.
+ */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
+    display: block;
+}
+
+/**
+ * Correct `inline-block` display not defined in IE 6/7/8/9 and Firefox 3.
+ */
+
+audio,
+canvas,
+video {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+
+/**
+ * Address styling not present in IE 7/8/9, Firefox 3, and Safari 4.
+ * Known issue: no IE 6 support.
+ */
+
+[hidden] {
+    display: none;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+/**
+ * 1. Prevent system color scheme's background color being used in Firefox, IE,
+ *    and Opera.
+ * 2. Prevent system color scheme's text color being used in Firefox, IE, and
+ *    Opera.
+ * 3. Correct text resizing oddly in IE 6/7 when body `font-size` is set using
+ *    `em` units.
+ * 4. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+
+html {
+    background: #fff; /* 1 */
+    color: #000; /* 2 */
+    font-size: 100%; /* 3 */
+    -webkit-text-size-adjust: 100%; /* 4 */
+    -ms-text-size-adjust: 100%; /* 4 */
+}
+
+/**
+ * Address `font-family` inconsistency between `textarea` and other form
+ * elements.
+ */
+
+html,
+button,
+input,
+select,
+textarea {
+    font-family: sans-serif;
+}
+
+/**
+ * Address margins handled incorrectly in IE 6/7.
+ */
+
+body {
+    margin: 0;
+}
+
+/* ==========================================================================
+   Links
+   ========================================================================== */
+
+/**
+ * Address `outline` inconsistency between Chrome and other browsers.
+ */
+
+a:focus {
+    outline: thin dotted;
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+
+a:active,
+a:hover {
+    outline: 0;
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+/**
+ * Address font sizes and margins set differently in IE 6/7.
+ * Address font sizes within `section` and `article` in Firefox 4+, Safari 5,
+ * and Chrome.
+ */
+
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+h2 {
+    font-size: 1.5em;
+    margin: 0.83em 0;
+}
+
+h3 {
+    font-size: 1.17em;
+    margin: 1em 0;
+}
+
+h4 {
+    font-size: 1em;
+    margin: 1.33em 0;
+}
+
+h5 {
+    font-size: 0.83em;
+    margin: 1.67em 0;
+}
+
+h6 {
+    font-size: 0.67em;
+    margin: 2.33em 0;
+}
+
+/**
+ * Address styling not present in IE 7/8/9, Safari 5, and Chrome.
+ */
+
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 3+, Safari 4/5, and Chrome.
+ */
+
+b,
+strong {
+    font-weight: bold;
+}
+
+blockquote {
+    margin: 1em 40px;
+}
+
+/**
+ * Address styling not present in Safari 5 and Chrome.
+ */
+
+dfn {
+    font-style: italic;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ * Known issue: no IE 6/7 normalization.
+ */
+
+hr {
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 0;
+}
+
+/**
+ * Address styling not present in IE 6/7/8/9.
+ */
+
+mark {
+    background: #ff0;
+    color: #000;
+}
+
+/**
+ * Address margins set differently in IE 6/7.
+ */
+
+p,
+pre {
+    margin: 1em 0;
+}
+
+/**
+ * Correct font family set oddly in IE 6, Safari 4/5, and Chrome.
+ */
+
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, serif;
+    _font-family: 'courier new', monospace;
+    font-size: 1em;
+}
+
+/**
+ * Improve readability of pre-formatted text in all browsers.
+ */
+
+pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/**
+ * Address CSS quotes not supported in IE 6/7.
+ */
+
+q {
+    quotes: none;
+}
+
+/**
+ * Address `quotes` property not supported in Safari 4.
+ */
+
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+
+small {
+    font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+/* ==========================================================================
+   Lists
+   ========================================================================== */
+
+/**
+ * Address margins set differently in IE 6/7.
+ */
+
+dl,
+menu,
+ol,
+ul {
+    margin: 1em 0;
+}
+
+dd {
+    margin: 0 0 0 40px;
+}
+
+/**
+ * Address paddings set differently in IE 6/7.
+ */
+
+menu,
+ol,
+ul {
+    padding: 0 0 0 40px;
+}
+
+/**
+ * Correct list images handled incorrectly in IE 7.
+ */
+
+nav ul,
+nav ol {
+    list-style: none;
+    list-style-image: none;
+}
+
+/* ==========================================================================
+   Embedded content
+   ========================================================================== */
+
+/**
+ * 1. Remove border when inside `a` element in IE 6/7/8/9 and Firefox 3.
+ * 2. Improve image quality when scaled in IE 7.
+ */
+
+img {
+    border: 0; /* 1 */
+    -ms-interpolation-mode: bicubic; /* 2 */
+}
+
+/**
+ * Correct overflow displayed oddly in IE 9.
+ */
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   Figures
+   ========================================================================== */
+
+/**
+ * Address margin not present in IE 6/7/8/9, Safari 5, and Opera 11.
+ */
+
+figure {
+    margin: 0;
+}
+
+/* ==========================================================================
+   Forms
+   ========================================================================== */
+
+/**
+ * Correct margin displayed oddly in IE 6/7.
+ */
+
+form {
+    margin: 0;
+}
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+
+fieldset {
+    border: 1px solid #c0c0c0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct color not being inherited in IE 6/7/8/9.
+ * 2. Correct text not wrapping in Firefox 3.
+ * 3. Correct alignment displayed oddly in IE 6/7.
+ */
+
+legend {
+    border: 0; /* 1 */
+    padding: 0;
+    white-space: normal; /* 2 */
+    *margin-left: -7px; /* 3 */
+}
+
+/**
+ * 1. Correct font size not being inherited in all browsers.
+ * 2. Address margins set differently in IE 6/7, Firefox 3+, Safari 5,
+ *    and Chrome.
+ * 3. Improve appearance and consistency in all browsers.
+ */
+
+button,
+input,
+select,
+textarea {
+    font-size: 100%; /* 1 */
+    margin: 0; /* 2 */
+    vertical-align: baseline; /* 3 */
+    *vertical-align: middle; /* 3 */
+}
+
+/**
+ * Address Firefox 3+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+
+button,
+input {
+    line-height: normal;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Chrome, Safari 5+, and IE 6+.
+ * Correct `select` style inheritance in Firefox 4+ and Opera.
+ */
+
+button,
+select {
+    text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ * 4. Remove inner spacing in IE 7 without affecting normal text inputs.
+ *    Known issue: inner spacing remains in IE 6.
+ */
+
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button; /* 2 */
+    cursor: pointer; /* 3 */
+    *overflow: visible;  /* 4 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+
+button[disabled],
+html input[disabled] {
+    cursor: default;
+}
+
+/**
+ * 1. Address box sizing set to content-box in IE 8/9.
+ * 2. Remove excess padding in IE 8/9.
+ * 3. Remove excess padding in IE 7.
+ *    Known issue: excess padding remains in IE 6.
+ */
+
+input[type="checkbox"],
+input[type="radio"] {
+    box-sizing: border-box; /* 1 */
+    padding: 0; /* 2 */
+    *height: 13px; /* 3 */
+    *width: 13px; /* 3 */
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari 5 and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari 5 and Chrome
+ *    (include `-moz` to future-proof).
+ */
+
+input[type="search"] {
+    -webkit-appearance: textfield; /* 1 */
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box; /* 2 */
+    box-sizing: content-box;
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari 5 and Chrome
+ * on OS X.
+ */
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+/**
+ * Remove inner padding and border in Firefox 3+.
+ */
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/**
+ * 1. Remove default vertical scrollbar in IE 6/7/8/9.
+ * 2. Improve readability and alignment in all browsers.
+ */
+
+textarea {
+    overflow: auto; /* 1 */
+    vertical-align: top; /* 2 */
+}
+
+/* ==========================================================================
+   Tables
+   ========================================================================== */
+
+/**
+ * Remove most spacing between table cells.
+ */
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+  </style>
+
+  <style type="text/css">
+  
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+  }
+  body {
+    background: #fff;
+    font-family: "Source Sans Pro", "Helvetica Neueue", Helvetica, sans;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.6em;
+  }
+  #content {
+    width: 70%;
+    max-width: 850px;
+    float: left;
+    padding: 30px 60px;
+    border-left: 1px solid #ddd;
+  }
+  #sidebar {
+    width: 25%;
+    float: left;
+    padding: 30px;
+    overflow: hidden;
+  }
+  #nav {
+    font-size: 130%;
+    margin: 0 0 15px 0;
+  }
+
+  #top {
+    display: block;
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+    font-size: .85em;
+    text-transform: uppercase;
+  }
+
+  #footer {
+    font-size: .75em;
+    padding: 5px 30px;
+    border-top: 1px solid #ddd;
+    text-align: right;
+  }
+    #footer p {
+      margin: 0 0 0 30px;
+      display: inline-block;
+    }
+
+  h1, h2, h3, h4, h5 {
+    font-weight: 300;
+  }
+  h1 {
+    font-size: 2.5em;
+    line-height: 1.1em;
+    margin: 0 0 .50em 0;
+  }
+
+  h2 {
+    font-size: 1.75em;
+    margin: 1em 0 .50em 0;
+  }
+
+  h3 {
+    margin: 25px 0 10px 0;
+  }
+
+  h4 {
+    margin: 0;
+    font-size: 105%;
+  }
+
+  a {
+    color: #058;
+    text-decoration: none;
+    transition: color .3s ease-in-out;
+  }
+
+  a:hover {
+    color: #e08524;
+    transition: color .3s ease-in-out;
+  }
+
+  pre, code, .mono, .name {
+    font-family: "Ubuntu Mono", "Cousine", "DejaVu Sans Mono", monospace;
+  }
+
+  .title .name {
+    font-weight: bold;
+  }
+  .section-title {
+    margin-top: 2em;
+  }
+  .ident {
+    color: #900;
+  }
+
+  code {
+    background: #f9f9f9;
+  } 
+
+  pre {
+    background: #fefefe;
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 0 #f3f3f3;
+    margin: 0 30px;
+    padding: 15px 30px;
+  }
+
+  .codehilite {
+    margin: 0 30px 10px 30px;
+  }
+
+    .codehilite pre {
+      margin: 0;
+    }
+    .codehilite .err { background: #ff3300; color: #fff !important; } 
+
+  table#module-list {
+    font-size: 110%;
+  }
+
+    table#module-list tr td:first-child {
+      padding-right: 10px;
+      white-space: nowrap;
+    }
+
+    table#module-list td {
+      vertical-align: top;
+      padding-bottom: 8px;
+    }
+
+      table#module-list td p {
+        margin: 0 0 7px 0;
+      }
+
+  .def {
+    display: table;
+  }
+
+    .def p {
+      display: table-cell;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .def p:first-child {
+      white-space: nowrap;
+    }
+
+    .def p:last-child {
+      width: 100%;
+    }
+
+
+  #index {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+    ul#index .class_name {
+      /* font-size: 110%; */
+      font-weight: bold;
+    }
+    #index ul {
+      margin: 0;
+    }
+
+  .item {
+    margin: 0 0 15px 0;
+  }
+
+    .item .class {
+      margin: 0 0 25px 30px;
+    }
+
+      .item .class ul.class_list {
+        margin: 0 0 20px 0;
+      }
+
+    .item .name {
+      background: #fafafa;
+      margin: 0;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 3px;
+      display: inline-block;
+      min-width: 40%;
+    }
+      .item .name:hover {
+        background: #f6f6f6;
+      }
+
+    .item .empty_desc {
+      margin: 0 0 5px 0;
+      padding: 0;
+    }
+
+    .item .inheritance {
+      margin: 3px 0 0 30px;
+    }
+
+    .item .inherited {
+      color: #666;
+    }
+
+    .item .desc {
+      padding: 0 8px;
+      margin: 0;
+    }
+
+      .item .desc p {
+        margin: 0 0 10px 0;
+      }
+
+    .source_cont {
+      margin: 0;
+      padding: 0;
+    }
+
+    .source_link a {
+      background: #ffc300;
+      font-weight: 400;
+      font-size: .75em;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 1px 1px 0 #f4b700;
+      
+      padding: 3px 8px;
+      border-radius: 2px;
+      transition: background .3s ease-in-out;
+    }
+      .source_link a:hover {
+        background: #FF7200;
+        text-shadow: none;
+        transition: background .3s ease-in-out;
+      }
+
+    .source {
+      display: none;
+      max-height: 600px;
+      overflow-y: scroll;
+      margin-bottom: 15px;
+    }
+
+      .source .codehilite {
+        margin: 0;
+      }
+
+  .desc h1, .desc h2, .desc h3 {
+    font-size: 100% !important;
+  }
+  .clear {
+    clear: both;
+  }
+
+  @media all and (max-width: 950px) {
+    #sidebar {
+      width: 35%;
+    }
+    #content {
+      width: 65%;
+    }
+  }
+  @media all and (max-width: 650px) {
+    #top {
+      display: none;
+    }
+    #sidebar {
+      float: none;
+      width: auto;
+    }
+    #content {
+      float: none;
+      width: auto;
+      padding: 30px;
+    }
+
+    #index ul {
+      padding: 0;
+      margin-bottom: 15px;
+    }
+    #index ul li {
+      display: inline-block;
+      margin-right: 30px;
+    }
+    #footer {
+      text-align: left;
+    }
+    #footer p {
+      display: block;
+      margin: inherit;
+    }
+  }
+
+  /*****************************/
+
+  </style>
+
+
+  <style type="text/css">
+  
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (-o-min-device-pixel-ratio: 5/4),
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
+
+  </style>
+
+  <script type="text/javascript">
+  function toggle(id, $link) {
+    $node = document.getElementById(id);
+    if (!$node)
+    return;
+    if (!$node.style.display || $node.style.display == 'none') {
+    $node.style.display = 'block';
+    $link.innerHTML = 'Hide source &nequiv;';
+    } else {
+    $node.style.display = 'none';
+    $link.innerHTML = 'Show source &equiv;';
+    }
+  }
+  </script>
+</head>
+<body>
+<a href="#" id="top">Top</a>
+
+<div id="container">
+    
+  
+  <div id="sidebar">
+    <h1>Index</h1>
+    <ul id="index">
+    <li class="set"><h3><a href="#header-variables">Module variables</a></h3>
+      
+  <ul>
+    <li class="mono"><a href="#libhoney.VERSION">VERSION</a></li>
+    <li class="mono"><a href="#libhoney.g_api_host">g_api_host</a></li>
+    <li class="mono"><a href="#libhoney.g_block_on_response">g_block_on_response</a></li>
+    <li class="mono"><a href="#libhoney.g_dataset">g_dataset</a></li>
+    <li class="mono"><a href="#libhoney.g_responses">g_responses</a></li>
+    <li class="mono"><a href="#libhoney.g_sample_rate">g_sample_rate</a></li>
+    <li class="mono"><a href="#libhoney.g_writekey">g_writekey</a></li>
+    <li class="mono"><a href="#libhoney.sd">sd</a></li>
+  </ul>
+
+    </li>
+
+    <li class="set"><h3><a href="#header-functions">Functions</a></h3>
+      
+  <ul>
+    <li class="mono"><a href="#libhoney.add">add</a></li>
+    <li class="mono"><a href="#libhoney.add_dynamic_field">add_dynamic_field</a></li>
+    <li class="mono"><a href="#libhoney.add_field">add_field</a></li>
+    <li class="mono"><a href="#libhoney.close">close</a></li>
+    <li class="mono"><a href="#libhoney.init">init</a></li>
+    <li class="mono"><a href="#libhoney.responses">responses</a></li>
+    <li class="mono"><a href="#libhoney.send_now">send_now</a></li>
+  </ul>
+
+    </li>
+
+    <li class="set"><h3><a href="#header-classes">Classes</a></h3>
+      <ul>
+        <li class="mono">
+        <span class="class_name"><a href="#libhoney.Builder">Builder</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#libhoney.Builder.__init__">__init__</a></li>
+    <li class="mono"><a href="#libhoney.Builder.add">add</a></li>
+    <li class="mono"><a href="#libhoney.Builder.add_dynamic_field">add_dynamic_field</a></li>
+    <li class="mono"><a href="#libhoney.Builder.add_field">add_field</a></li>
+    <li class="mono"><a href="#libhoney.Builder.clone">clone</a></li>
+    <li class="mono"><a href="#libhoney.Builder.new_event">new_event</a></li>
+    <li class="mono"><a href="#libhoney.Builder.send_now">send_now</a></li>
+  </ul>
+
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#libhoney.Event">Event</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#libhoney.Event.__init__">__init__</a></li>
+    <li class="mono"><a href="#libhoney.Event.add">add</a></li>
+    <li class="mono"><a href="#libhoney.Event.add_field">add_field</a></li>
+    <li class="mono"><a href="#libhoney.Event.add_metadata">add_metadata</a></li>
+    <li class="mono"><a href="#libhoney.Event.send">send</a></li>
+    <li class="mono"><a href="#libhoney.Event.send_presampled">send_presampled</a></li>
+    <li class="mono"><a href="#libhoney.Event.timer">timer</a></li>
+  </ul>
+
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#libhoney.FieldHolder">FieldHolder</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#libhoney.FieldHolder.__init__">__init__</a></li>
+    <li class="mono"><a href="#libhoney.FieldHolder.add">add</a></li>
+    <li class="mono"><a href="#libhoney.FieldHolder.add_dynamic_field">add_dynamic_field</a></li>
+    <li class="mono"><a href="#libhoney.FieldHolder.add_field">add_field</a></li>
+    <li class="mono"><a href="#libhoney.FieldHolder.is_empty">is_empty</a></li>
+  </ul>
+
+        </li>
+        <li class="mono">
+        <span class="class_name"><a href="#libhoney.SendError">SendError</a></span>
+        
+          
+  <ul>
+    <li class="mono"><a href="#libhoney.SendError.__init__">__init__</a></li>
+  </ul>
+
+        </li>
+      </ul>
+    </li>
+
+    <li class="set"><h3><a href="#header-submodules">Sub-modules</a></h3>
+      <ul>
+        <li class="mono"><a href="transmission.m.html">libhoney.transmission</a></li>
+        <li class="mono"><a href="version.m.html">libhoney.version</a></li>
+      </ul>
+    </li>
+    </ul>
+  </div>
+
+    <article id="content">
+      
+  
+
+  
+
+
+  <header id="section-intro">
+  <h1 class="title"><span class="name">libhoney</span> module</h1>
+  <p>libhoney is a library to allow you to send events to Honeycomb from within
+your python application.</p>
+<p>Basic usage:
+<em> initialize libhoney with your Honeycomb writekey and dataset name
+</em> create an event object and populate it with fields
+<em> send the event object
+</em> close libhoney when your program is finished</p>
+<p>Sending on a closed or uninitialized libhoney will throw a libhoney.SendError
+exception.</p>
+<p>You can find an example demonstrating usage in example.py</p>
+  
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney" class="source">
+    <pre><code>'''libhoney is a library to allow you to send events to Honeycomb from within
+your python application.
+
+Basic usage:
+* initialize libhoney with your Honeycomb writekey and dataset name
+* create an event object and populate it with fields
+* send the event object
+* close libhoney when your program is finished
+
+Sending on a closed or uninitialized libhoney will throw a libhoney.SendError
+exception.
+
+You can find an example demonstrating usage in example.py'''
+
+import datetime
+from contextlib import contextmanager
+import json
+from libhoney import transmission
+import inspect
+import statsd
+import random
+from six.moves import queue
+from libhoney.version import VERSION
+
+# global transmit instance will be held by _xmit
+_xmit = None
+
+g_writekey = ""
+g_dataset = ""
+g_api_host = ""
+g_sample_rate = 1
+g_responses = queue.Queue(maxsize=1)
+g_block_on_response = False
+
+transmission.VERSION = VERSION
+
+sd = statsd.StatsClient(prefix="libhoney")
+
+random.seed()
+
+
+def init(writekey="", dataset="", sample_rate=1,
+         api_host="https://api.honeycomb.io", max_concurrent_batches=10,
+         block_on_send=False, block_on_response=False):
+    '''initialize libhoney and prepare it to send events to Honeycomb
+    writekey: the authorization key for your team on Honeycomb. Find your team
+        write key at https://ui.honeycomb.io/account
+    dataset: the name of the default dataset to which to write
+    sample_rate: the default sample rate. 1 / sample_rate events will be sent.
+    max_concurrent_batches: the number of threads to spin up to send events
+    block_on_send: if true, block when send queue fills. If false, drop
+        events until there's room in the queue
+    block_on_response: if true, block when the response queue fills. if
+        false, drop response objects.'''
+    global _xmit, g_writekey, g_dataset, g_api_host, g_sample_rate, g_responses
+    global g_block_on_response
+    _xmit = transmission.Transmission(max_concurrent_batches, block_on_send,
+                                      block_on_response)
+    g_writekey = writekey
+    g_dataset = dataset
+    g_api_host = api_host
+    g_sample_rate = sample_rate
+    g_responses = _xmit.get_response_queue()
+    g_block_on_response = block_on_response
+
+
+def responses():
+    '''returns a queue from which you can read a record of response info from
+    each event sent. Responses will be dicts with the following keys:
+    * status_code - the HTTP response from the api (eg. 200 or 503)
+    * duration - how long it took to POST this event to the api, in ms
+    * metadata - pass through the metadata you added on the initial event
+    * body - the content returned by API (will be empty on success)
+    * error - in an error condition, this is filled with the error message
+    When a None object appears on the queue the reader should exit'''
+    global g_responses
+    return g_responses
+
+
+def add_field(name, val):
+    '''add a global field. This field will be sent with every event.'''
+    _fields.add_field(name, val)
+
+
+def add_dynamic_field(fn):
+    '''add a global dynamic field. This function will be executed every time an
+       event is created. The key/value pair of the function's name and its
+       return value will be sent with every event.'''
+    _fields.add_dynamic_field(fn)
+
+
+def add(data):
+    '''add takes a mappable object and adds each key/value pair to the global
+       scope'''
+    _fields.add(data)
+
+
+def send_now(data):
+    '''creates an event with the data passed in and sends it immediately.
+       Shorthand for ev = Event(); ev.add(data); ev.send()'''
+    ev = Event()
+    ev.add(data)
+    ev.send()
+
+
+def close():
+    '''wait for in-flight events to be transmitted then shut down cleanly'''
+    global _xmit
+
+    # if libhoney was never initialized, don't try to close it
+    if _xmit:
+        _xmit.close()
+
+    # we should error on post-close sends
+    _xmit = None
+
+
+class FieldHolder:
+    '''A FieldHolder is the generalized class that stores fields and dynamic
+       fields. It should not be used directly; only through the subclasses'''
+
+    def __init__(self):
+        self._data = {}
+        self._dyn_fields = set()
+
+    def __add__(self, other):
+        '''adding two field holders merges the data with other overriding
+           any fields they have in common'''
+        self._data.update(other._data)
+        self._dyn_fields.update(other._dyn_fields)
+        return self
+
+    def __eq__(self, other):
+        '''two FieldHolders are equal if their datasets are equal'''
+        return ((self._data, self._dyn_fields) ==
+                (other._data, other._dyn_fields))
+
+    def __ne__(self, other):
+        '''two FieldHolders are equal if their datasets are equal'''
+        return not self.__eq__(other)
+
+    def add_field(self, name, val):
+        self._data[name] = val
+
+    def add_dynamic_field(self, fn):
+        if not inspect.isroutine(fn):
+            raise TypeError("add_dynamic_field requires function argument")
+        self._dyn_fields.add(fn)
+
+    def add(self, data):
+        try:
+            for k, v in data.items():
+                self.add_field(k, v)
+        except AttributeError:
+            raise TypeError("add requires a dict-like argument")
+
+    def is_empty(self):
+        '''returns true if there is no data in this FieldHolder'''
+        return len(self._data) == 0
+
+    def __str__(self):
+        '''returns a JSON blob of the fields in this holder'''
+        return json.dumps(self._data)
+
+_fields = FieldHolder()
+
+
+class Builder(object):
+    '''A Builder is a scoped object to which you can add fields and dynamic
+       fields.  Events created from this builder will inherit all fields
+       and dynamic fields from this builder and the global environment'''
+
+    def __init__(self, data={}, dyn_fields=[], fields=FieldHolder()):
+        self._fields = FieldHolder()  # get an empty FH
+        self._fields += _fields       # fill it with the global state
+        self._fields.add(data)        # and anything passed in
+        [self._fields.add_dynamic_field(fn) for fn in dyn_fields]
+        self._fields += fields
+        self.writekey = g_writekey
+        self.dataset = g_dataset
+        self.sample_rate = g_sample_rate
+
+    def add_field(self, name, val):
+        self._fields.add_field(name, val)
+
+    def add_dynamic_field(self, fn):
+        '''add_dynamic_field adds a function to the builder. When you create an
+           event from this builder, the function will be executed. The function
+           name is the key and it should return one value.'''
+        self._fields.add_dynamic_field(fn)
+
+    def add(self, data):
+        '''add takes a dict-like object and adds each key/value pair to the
+           builder.'''
+        self._fields.add(data)
+
+    def send_now(self, data):
+        '''creates an event from this builder with the data passed in and sends
+           it immediately. Shorthand for
+           ev = builder.new_event(); ev.add(data); ev.send()'''
+        ev = self.new_event()
+        ev.add(data)
+        ev.send()
+
+    def new_event(self):
+        '''creates a new event from this builder, inheriting all fields and
+           dynamic fields present in the builder'''
+        ev = Event(fields=self._fields)
+        ev.writekey = self.writekey
+        ev.dataset = self.dataset
+        ev.sample_rate = self.sample_rate
+        return ev
+
+    def clone(self):
+        '''creates a new builder from this one, creating its own scope to
+           which additional fields and dynamic fields can be added.'''
+        c = Builder(fields=self._fields)
+        c.writekey = self.writekey
+        c.dataset = self.dataset
+        c.sample_rate = self.sample_rate
+        return c
+
+
+class Event(object):
+    '''An Event is a collection of fields that will be sent to Honeycomb.'''
+
+    def __init__(self, data={}, dyn_fields=[], fields=FieldHolder()):
+        # populate the event's fields
+        self._fields = FieldHolder()  # get an empty FH
+        self._fields += _fields       # fill it with the global state
+        self._fields.add(data)        # and anything passed in
+        [self._fields.add_dynamic_field(fn) for fn in dyn_fields]
+        self._fields += fields
+        # fill in other info
+        self.created_at = datetime.datetime.utcnow()
+        self.writekey = g_writekey
+        self.dataset = g_dataset
+        self.api_host = g_api_host
+        self.sample_rate = g_sample_rate
+        self.metadata = None
+        # execute all the dynamic functions and add their data
+        for fn in self._fields._dyn_fields:
+            self._fields.add_field(fn.__name__, fn())
+
+    def add_field(self, name, val):
+        self._fields.add_field(name, val)
+
+    def add_metadata(self, md):
+        '''Add metadata to an event. This metadata is handed back to you in
+        the response queue. It is not transmitted to Honeycomb; it is a place
+        for you to put identifying information to understand which event a
+        response queue object represents.'''
+        self.metadata = md
+
+    def add(self, data):
+        self._fields.add(data)
+
+    @contextmanager
+    def timer(self, name):
+        '''timer is a context for timing (in milliseconds) a function call.
+           example:
+           ev = Event()
+           with ev.timer("database_dur_ms"):
+             do_database_work()
+           will add a field (name, duration) indicating how long it took to run
+           do_database_work()'''
+        start = datetime.datetime.now()
+        yield
+        duration = datetime.datetime.now() - start
+        # report in ms
+        self.add_field(name, duration.total_seconds() * 1000)
+
+    def send(self):
+        '''send queues this event for transmission to Honeycomb.
+        Raises a SendError exception when called with an uninitialized
+        libhoney. Will drop sampled events when samplerate > 1,
+        and ensure that the Honeycomb datastore correctly considers it
+        as representing `samplerate` number of similar events.'''
+        global _xmit
+        if _xmit is None:
+            # do this in addition to below to error even when sampled
+            raise SendError(
+                "Tried to send on a closed or uninitialized libhoney")
+        if _should_drop(self.sample_rate):
+            sd.incr("sampled")
+            _send_dropped_response(self)
+            return
+        self.send_presampled()
+
+    def send_presampled(self):
+        '''send_presampled queues this event for transmission to Honeycomb.
+        Caller is responsible for sampling logic - will not drop any events
+        for sampling. Defining a `samplerate` will ensure that the Honeycomb
+        datastore correctly considers it as representing `samplerate` number
+        of similar events.'''
+        global _xmit
+        if _xmit is None:
+            raise SendError(
+                "Tried to send on a closed or uninitialized libhoney")
+        if self._fields.is_empty():
+            raise SendError(
+                "No metrics added to event. Won't send empty event.")
+        if self.api_host == "":
+            raise SendError(
+                "No api_host for Honeycomb. Can't send to the Great Unknown.")
+        if self.writekey == "":
+            raise SendError(
+                "No write_key specified. Can't send event.")
+        if self.dataset == "":
+            raise SendError(
+                "No dataset for Honeycomb. Can't send event without knowing which dataset it belongs to.")
+        _xmit.send(self)
+
+    def __str__(self):
+        return str(self._fields)
+
+
+def _should_drop(rate):
+    '''returns true if the sample should be dropped'''
+    return random.randint(1, rate) != 1
+
+
+def _send_dropped_response(ev):
+    '''push the dropped event down the responses queue'''
+    response = {
+        "status_code": 0,
+        "duration": 0,
+        "metadata": ev.metadata,
+        "body": "",
+        "error": "event dropped due to sampling",
+    }
+    try:
+        if g_block_on_response:
+            g_responses.put(response)
+        else:
+            g_responses.put_nowait(response)
+    except queue.Full:
+        pass
+
+
+class SendError(Exception):
+    def __init__(self, *args, **kwargs):
+        Exception.__init__(self, *args, **kwargs)
+</code></pre>
+  </div>
+
+  </header>
+
+  <section id="section-items">
+    <h2 class="section-title" id="header-variables">Module variables</h2>
+      <div class="item">
+      <p id="libhoney.VERSION" class="name">var <span class="ident">VERSION</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="libhoney.g_api_host" class="name">var <span class="ident">g_api_host</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="libhoney.g_block_on_response" class="name">var <span class="ident">g_block_on_response</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="libhoney.g_dataset" class="name">var <span class="ident">g_dataset</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="libhoney.g_responses" class="name">var <span class="ident">g_responses</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="libhoney.g_sample_rate" class="name">var <span class="ident">g_sample_rate</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="libhoney.g_writekey" class="name">var <span class="ident">g_writekey</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+      <div class="item">
+      <p id="libhoney.sd" class="name">var <span class="ident">sd</span></p>
+      
+  
+  <div class="source_cont">
+</div>
+
+      </div>
+
+    <h2 class="section-title" id="header-functions">Functions</h2>
+      
+  <div class="item">
+    <div class="name def" id="libhoney.add">
+    <p>def <span class="ident">add</span>(</p><p>data)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>add takes a mappable object and adds each key/value pair to the global
+scope</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.add', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.add" class="source">
+    <pre><code>def add(data):
+    '''add takes a mappable object and adds each key/value pair to the global
+       scope'''
+    _fields.add(data)
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="libhoney.add_dynamic_field">
+    <p>def <span class="ident">add_dynamic_field</span>(</p><p>fn)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>add a global dynamic field. This function will be executed every time an
+event is created. The key/value pair of the function's name and its
+return value will be sent with every event.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.add_dynamic_field', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.add_dynamic_field" class="source">
+    <pre><code>def add_dynamic_field(fn):
+    '''add a global dynamic field. This function will be executed every time an
+       event is created. The key/value pair of the function's name and its
+       return value will be sent with every event.'''
+    _fields.add_dynamic_field(fn)
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="libhoney.add_field">
+    <p>def <span class="ident">add_field</span>(</p><p>name, val)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>add a global field. This field will be sent with every event.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.add_field', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.add_field" class="source">
+    <pre><code>def add_field(name, val):
+    '''add a global field. This field will be sent with every event.'''
+    _fields.add_field(name, val)
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="libhoney.close">
+    <p>def <span class="ident">close</span>(</p><p>)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>wait for in-flight events to be transmitted then shut down cleanly</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.close', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.close" class="source">
+    <pre><code>def close():
+    '''wait for in-flight events to be transmitted then shut down cleanly'''
+    global _xmit
+
+    # if libhoney was never initialized, don't try to close it
+    if _xmit:
+        _xmit.close()
+
+    # we should error on post-close sends
+    _xmit = None
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="libhoney.init">
+    <p>def <span class="ident">init</span>(</p><p>writekey=&#39;&#39;, dataset=&#39;&#39;, sample_rate=1, api_host=&#39;https://api.honeycomb.io&#39;, max_concurrent_batches=10, block_on_send=False, block_on_response=False)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>initialize libhoney and prepare it to send events to Honeycomb
+writekey: the authorization key for your team on Honeycomb. Find your team
+    write key at https://ui.honeycomb.io/account
+dataset: the name of the default dataset to which to write
+sample_rate: the default sample rate. 1 / sample_rate events will be sent.
+max_concurrent_batches: the number of threads to spin up to send events
+block_on_send: if true, block when send queue fills. If false, drop
+    events until there's room in the queue
+block_on_response: if true, block when the response queue fills. if
+    false, drop response objects.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.init', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.init" class="source">
+    <pre><code>def init(writekey="", dataset="", sample_rate=1,
+         api_host="https://api.honeycomb.io", max_concurrent_batches=10,
+         block_on_send=False, block_on_response=False):
+    '''initialize libhoney and prepare it to send events to Honeycomb
+    writekey: the authorization key for your team on Honeycomb. Find your team
+        write key at https://ui.honeycomb.io/account
+    dataset: the name of the default dataset to which to write
+    sample_rate: the default sample rate. 1 / sample_rate events will be sent.
+    max_concurrent_batches: the number of threads to spin up to send events
+    block_on_send: if true, block when send queue fills. If false, drop
+        events until there's room in the queue
+    block_on_response: if true, block when the response queue fills. if
+        false, drop response objects.'''
+    global _xmit, g_writekey, g_dataset, g_api_host, g_sample_rate, g_responses
+    global g_block_on_response
+    _xmit = transmission.Transmission(max_concurrent_batches, block_on_send,
+                                      block_on_response)
+    g_writekey = writekey
+    g_dataset = dataset
+    g_api_host = api_host
+    g_sample_rate = sample_rate
+    g_responses = _xmit.get_response_queue()
+    g_block_on_response = block_on_response
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="libhoney.responses">
+    <p>def <span class="ident">responses</span>(</p><p>)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>returns a queue from which you can read a record of response info from
+each event sent. Responses will be dicts with the following keys:
+<em> status_code - the HTTP response from the api (eg. 200 or 503)
+</em> duration - how long it took to POST this event to the api, in ms
+<em> metadata - pass through the metadata you added on the initial event
+</em> body - the content returned by API (will be empty on success)
+* error - in an error condition, this is filled with the error message
+When a None object appears on the queue the reader should exit</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.responses', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.responses" class="source">
+    <pre><code>def responses():
+    '''returns a queue from which you can read a record of response info from
+    each event sent. Responses will be dicts with the following keys:
+    * status_code - the HTTP response from the api (eg. 200 or 503)
+    * duration - how long it took to POST this event to the api, in ms
+    * metadata - pass through the metadata you added on the initial event
+    * body - the content returned by API (will be empty on success)
+    * error - in an error condition, this is filled with the error message
+    When a None object appears on the queue the reader should exit'''
+    global g_responses
+    return g_responses
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+      
+  <div class="item">
+    <div class="name def" id="libhoney.send_now">
+    <p>def <span class="ident">send_now</span>(</p><p>data)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>creates an event with the data passed in and sends it immediately.
+Shorthand for ev = Event(); ev.add(data); ev.send()</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.send_now', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.send_now" class="source">
+    <pre><code>def send_now(data):
+    '''creates an event with the data passed in and sends it immediately.
+       Shorthand for ev = Event(); ev.add(data); ev.send()'''
+    ev = Event()
+    ev.add(data)
+    ev.send()
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+
+    <h2 class="section-title" id="header-classes">Classes</h2>
+      
+      <div class="item">
+      <p id="libhoney.Builder" class="name">class <span class="ident">Builder</span></p>
+      
+  
+    <div class="desc"><p>A Builder is a scoped object to which you can add fields and dynamic
+fields.  Events created from this builder will inherit all fields
+and dynamic fields from this builder and the global environment</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Builder', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Builder" class="source">
+    <pre><code>class Builder(object):
+    '''A Builder is a scoped object to which you can add fields and dynamic
+       fields.  Events created from this builder will inherit all fields
+       and dynamic fields from this builder and the global environment'''
+
+    def __init__(self, data={}, dyn_fields=[], fields=FieldHolder()):
+        self._fields = FieldHolder()  # get an empty FH
+        self._fields += _fields       # fill it with the global state
+        self._fields.add(data)        # and anything passed in
+        [self._fields.add_dynamic_field(fn) for fn in dyn_fields]
+        self._fields += fields
+        self.writekey = g_writekey
+        self.dataset = g_dataset
+        self.sample_rate = g_sample_rate
+
+    def add_field(self, name, val):
+        self._fields.add_field(name, val)
+
+    def add_dynamic_field(self, fn):
+        '''add_dynamic_field adds a function to the builder. When you create an
+           event from this builder, the function will be executed. The function
+           name is the key and it should return one value.'''
+        self._fields.add_dynamic_field(fn)
+
+    def add(self, data):
+        '''add takes a dict-like object and adds each key/value pair to the
+           builder.'''
+        self._fields.add(data)
+
+    def send_now(self, data):
+        '''creates an event from this builder with the data passed in and sends
+           it immediately. Shorthand for
+           ev = builder.new_event(); ev.add(data); ev.send()'''
+        ev = self.new_event()
+        ev.add(data)
+        ev.send()
+
+    def new_event(self):
+        '''creates a new event from this builder, inheriting all fields and
+           dynamic fields present in the builder'''
+        ev = Event(fields=self._fields)
+        ev.writekey = self.writekey
+        ev.dataset = self.dataset
+        ev.sample_rate = self.sample_rate
+        return ev
+
+    def clone(self):
+        '''creates a new builder from this one, creating its own scope to
+           which additional fields and dynamic fields can be added.'''
+        c = Builder(fields=self._fields)
+        c.writekey = self.writekey
+        c.dataset = self.dataset
+        c.sample_rate = self.sample_rate
+        return c
+</code></pre>
+  </div>
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="#libhoney.Builder">Builder</a></li>
+          <li>builtins.object</li>
+          </ul>
+          <h3>Static methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Builder.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self, data={}, dyn_fields=[], fields=&lt;libhoney.FieldHolder object at 0x7fe84b01b7b8&gt;)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Initialize self.  See help(type(self)) for accurate signature.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Builder.__init__', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Builder.__init__" class="source">
+    <pre><code>def __init__(self, data={}, dyn_fields=[], fields=FieldHolder()):
+    self._fields = FieldHolder()  # get an empty FH
+    self._fields += _fields       # fill it with the global state
+    self._fields.add(data)        # and anything passed in
+    [self._fields.add_dynamic_field(fn) for fn in dyn_fields]
+    self._fields += fields
+    self.writekey = g_writekey
+    self.dataset = g_dataset
+    self.sample_rate = g_sample_rate
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Builder.add">
+    <p>def <span class="ident">add</span>(</p><p>self, data)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>add takes a dict-like object and adds each key/value pair to the
+builder.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Builder.add', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Builder.add" class="source">
+    <pre><code>def add(self, data):
+    '''add takes a dict-like object and adds each key/value pair to the
+       builder.'''
+    self._fields.add(data)
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Builder.add_dynamic_field">
+    <p>def <span class="ident">add_dynamic_field</span>(</p><p>self, fn)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>add_dynamic_field adds a function to the builder. When you create an
+event from this builder, the function will be executed. The function
+name is the key and it should return one value.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Builder.add_dynamic_field', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Builder.add_dynamic_field" class="source">
+    <pre><code>def add_dynamic_field(self, fn):
+    '''add_dynamic_field adds a function to the builder. When you create an
+       event from this builder, the function will be executed. The function
+       name is the key and it should return one value.'''
+    self._fields.add_dynamic_field(fn)
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Builder.add_field">
+    <p>def <span class="ident">add_field</span>(</p><p>self, name, val)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Builder.add_field', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Builder.add_field" class="source">
+    <pre><code>def add_field(self, name, val):
+    self._fields.add_field(name, val)
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Builder.clone">
+    <p>def <span class="ident">clone</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>creates a new builder from this one, creating its own scope to
+which additional fields and dynamic fields can be added.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Builder.clone', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Builder.clone" class="source">
+    <pre><code>def clone(self):
+    '''creates a new builder from this one, creating its own scope to
+       which additional fields and dynamic fields can be added.'''
+    c = Builder(fields=self._fields)
+    c.writekey = self.writekey
+    c.dataset = self.dataset
+    c.sample_rate = self.sample_rate
+    return c
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Builder.new_event">
+    <p>def <span class="ident">new_event</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>creates a new event from this builder, inheriting all fields and
+dynamic fields present in the builder</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Builder.new_event', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Builder.new_event" class="source">
+    <pre><code>def new_event(self):
+    '''creates a new event from this builder, inheriting all fields and
+       dynamic fields present in the builder'''
+    ev = Event(fields=self._fields)
+    ev.writekey = self.writekey
+    ev.dataset = self.dataset
+    ev.sample_rate = self.sample_rate
+    return ev
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Builder.send_now">
+    <p>def <span class="ident">send_now</span>(</p><p>self, data)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>creates an event from this builder with the data passed in and sends
+it immediately. Shorthand for
+ev = builder.new_event(); ev.add(data); ev.send()</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Builder.send_now', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Builder.send_now" class="source">
+    <pre><code>def send_now(self, data):
+    '''creates an event from this builder with the data passed in and sends
+       it immediately. Shorthand for
+       ev = builder.new_event(); ev.add(data); ev.send()'''
+    ev = self.new_event()
+    ev.add(data)
+    ev.send()
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+          <h3>Instance variables</h3>
+            <div class="item">
+            <p id="libhoney.Builder.dataset" class="name">var <span class="ident">dataset</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="libhoney.Builder.sample_rate" class="name">var <span class="ident">sample_rate</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="libhoney.Builder.writekey" class="name">var <span class="ident">writekey</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="libhoney.Event" class="name">class <span class="ident">Event</span></p>
+      
+  
+    <div class="desc"><p>An Event is a collection of fields that will be sent to Honeycomb.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Event', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Event" class="source">
+    <pre><code>class Event(object):
+    '''An Event is a collection of fields that will be sent to Honeycomb.'''
+
+    def __init__(self, data={}, dyn_fields=[], fields=FieldHolder()):
+        # populate the event's fields
+        self._fields = FieldHolder()  # get an empty FH
+        self._fields += _fields       # fill it with the global state
+        self._fields.add(data)        # and anything passed in
+        [self._fields.add_dynamic_field(fn) for fn in dyn_fields]
+        self._fields += fields
+        # fill in other info
+        self.created_at = datetime.datetime.utcnow()
+        self.writekey = g_writekey
+        self.dataset = g_dataset
+        self.api_host = g_api_host
+        self.sample_rate = g_sample_rate
+        self.metadata = None
+        # execute all the dynamic functions and add their data
+        for fn in self._fields._dyn_fields:
+            self._fields.add_field(fn.__name__, fn())
+
+    def add_field(self, name, val):
+        self._fields.add_field(name, val)
+
+    def add_metadata(self, md):
+        '''Add metadata to an event. This metadata is handed back to you in
+        the response queue. It is not transmitted to Honeycomb; it is a place
+        for you to put identifying information to understand which event a
+        response queue object represents.'''
+        self.metadata = md
+
+    def add(self, data):
+        self._fields.add(data)
+
+    @contextmanager
+    def timer(self, name):
+        '''timer is a context for timing (in milliseconds) a function call.
+           example:
+           ev = Event()
+           with ev.timer("database_dur_ms"):
+             do_database_work()
+           will add a field (name, duration) indicating how long it took to run
+           do_database_work()'''
+        start = datetime.datetime.now()
+        yield
+        duration = datetime.datetime.now() - start
+        # report in ms
+        self.add_field(name, duration.total_seconds() * 1000)
+
+    def send(self):
+        '''send queues this event for transmission to Honeycomb.
+        Raises a SendError exception when called with an uninitialized
+        libhoney. Will drop sampled events when samplerate > 1,
+        and ensure that the Honeycomb datastore correctly considers it
+        as representing `samplerate` number of similar events.'''
+        global _xmit
+        if _xmit is None:
+            # do this in addition to below to error even when sampled
+            raise SendError(
+                "Tried to send on a closed or uninitialized libhoney")
+        if _should_drop(self.sample_rate):
+            sd.incr("sampled")
+            _send_dropped_response(self)
+            return
+        self.send_presampled()
+
+    def send_presampled(self):
+        '''send_presampled queues this event for transmission to Honeycomb.
+        Caller is responsible for sampling logic - will not drop any events
+        for sampling. Defining a `samplerate` will ensure that the Honeycomb
+        datastore correctly considers it as representing `samplerate` number
+        of similar events.'''
+        global _xmit
+        if _xmit is None:
+            raise SendError(
+                "Tried to send on a closed or uninitialized libhoney")
+        if self._fields.is_empty():
+            raise SendError(
+                "No metrics added to event. Won't send empty event.")
+        if self.api_host == "":
+            raise SendError(
+                "No api_host for Honeycomb. Can't send to the Great Unknown.")
+        if self.writekey == "":
+            raise SendError(
+                "No write_key specified. Can't send event.")
+        if self.dataset == "":
+            raise SendError(
+                "No dataset for Honeycomb. Can't send event without knowing which dataset it belongs to.")
+        _xmit.send(self)
+
+    def __str__(self):
+        return str(self._fields)
+</code></pre>
+  </div>
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="#libhoney.Event">Event</a></li>
+          <li>builtins.object</li>
+          </ul>
+          <h3>Static methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Event.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self, data={}, dyn_fields=[], fields=&lt;libhoney.FieldHolder object at 0x7fe84a819588&gt;)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Initialize self.  See help(type(self)) for accurate signature.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Event.__init__', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Event.__init__" class="source">
+    <pre><code>def __init__(self, data={}, dyn_fields=[], fields=FieldHolder()):
+    # populate the event's fields
+    self._fields = FieldHolder()  # get an empty FH
+    self._fields += _fields       # fill it with the global state
+    self._fields.add(data)        # and anything passed in
+    [self._fields.add_dynamic_field(fn) for fn in dyn_fields]
+    self._fields += fields
+    # fill in other info
+    self.created_at = datetime.datetime.utcnow()
+    self.writekey = g_writekey
+    self.dataset = g_dataset
+    self.api_host = g_api_host
+    self.sample_rate = g_sample_rate
+    self.metadata = None
+    # execute all the dynamic functions and add their data
+    for fn in self._fields._dyn_fields:
+        self._fields.add_field(fn.__name__, fn())
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Event.add">
+    <p>def <span class="ident">add</span>(</p><p>self, data)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Event.add', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Event.add" class="source">
+    <pre><code>def add(self, data):
+    self._fields.add(data)
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Event.add_field">
+    <p>def <span class="ident">add_field</span>(</p><p>self, name, val)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Event.add_field', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Event.add_field" class="source">
+    <pre><code>def add_field(self, name, val):
+    self._fields.add_field(name, val)
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Event.add_metadata">
+    <p>def <span class="ident">add_metadata</span>(</p><p>self, md)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Add metadata to an event. This metadata is handed back to you in
+the response queue. It is not transmitted to Honeycomb; it is a place
+for you to put identifying information to understand which event a
+response queue object represents.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Event.add_metadata', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Event.add_metadata" class="source">
+    <pre><code>def add_metadata(self, md):
+    '''Add metadata to an event. This metadata is handed back to you in
+    the response queue. It is not transmitted to Honeycomb; it is a place
+    for you to put identifying information to understand which event a
+    response queue object represents.'''
+    self.metadata = md
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Event.send">
+    <p>def <span class="ident">send</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>send queues this event for transmission to Honeycomb.
+Raises a SendError exception when called with an uninitialized
+libhoney. Will drop sampled events when samplerate &gt; 1,
+and ensure that the Honeycomb datastore correctly considers it
+as representing <code>samplerate</code> number of similar events.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Event.send', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Event.send" class="source">
+    <pre><code>def send(self):
+    '''send queues this event for transmission to Honeycomb.
+    Raises a SendError exception when called with an uninitialized
+    libhoney. Will drop sampled events when samplerate > 1,
+    and ensure that the Honeycomb datastore correctly considers it
+    as representing `samplerate` number of similar events.'''
+    global _xmit
+    if _xmit is None:
+        # do this in addition to below to error even when sampled
+        raise SendError(
+            "Tried to send on a closed or uninitialized libhoney")
+    if _should_drop(self.sample_rate):
+        sd.incr("sampled")
+        _send_dropped_response(self)
+        return
+    self.send_presampled()
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Event.send_presampled">
+    <p>def <span class="ident">send_presampled</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>send_presampled queues this event for transmission to Honeycomb.
+Caller is responsible for sampling logic - will not drop any events
+for sampling. Defining a <code>samplerate</code> will ensure that the Honeycomb
+datastore correctly considers it as representing <code>samplerate</code> number
+of similar events.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Event.send_presampled', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Event.send_presampled" class="source">
+    <pre><code>def send_presampled(self):
+    '''send_presampled queues this event for transmission to Honeycomb.
+    Caller is responsible for sampling logic - will not drop any events
+    for sampling. Defining a `samplerate` will ensure that the Honeycomb
+    datastore correctly considers it as representing `samplerate` number
+    of similar events.'''
+    global _xmit
+    if _xmit is None:
+        raise SendError(
+            "Tried to send on a closed or uninitialized libhoney")
+    if self._fields.is_empty():
+        raise SendError(
+            "No metrics added to event. Won't send empty event.")
+    if self.api_host == "":
+        raise SendError(
+            "No api_host for Honeycomb. Can't send to the Great Unknown.")
+    if self.writekey == "":
+        raise SendError(
+            "No write_key specified. Can't send event.")
+    if self.dataset == "":
+        raise SendError(
+            "No dataset for Honeycomb. Can't send event without knowing which dataset it belongs to.")
+    _xmit.send(self)
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.Event.timer">
+    <p>def <span class="ident">timer</span>(</p><p>*args, **kwds)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>timer is a context for timing (in milliseconds) a function call.
+example:
+ev = Event()
+with ev.timer("database_dur_ms"):
+  do_database_work()
+will add a field (name, duration) indicating how long it took to run
+do_database_work()</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.Event.timer', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.Event.timer" class="source">
+    <pre><code>@contextmanager
+def timer(self, name):
+    '''timer is a context for timing (in milliseconds) a function call.
+       example:
+       ev = Event()
+       with ev.timer("database_dur_ms"):
+         do_database_work()
+       will add a field (name, duration) indicating how long it took to run
+       do_database_work()'''
+    start = datetime.datetime.now()
+    yield
+    duration = datetime.datetime.now() - start
+    # report in ms
+    self.add_field(name, duration.total_seconds() * 1000)
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+          <h3>Instance variables</h3>
+            <div class="item">
+            <p id="libhoney.Event.api_host" class="name">var <span class="ident">api_host</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="libhoney.Event.created_at" class="name">var <span class="ident">created_at</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="libhoney.Event.dataset" class="name">var <span class="ident">dataset</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="libhoney.Event.metadata" class="name">var <span class="ident">metadata</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="libhoney.Event.sample_rate" class="name">var <span class="ident">sample_rate</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+            <div class="item">
+            <p id="libhoney.Event.writekey" class="name">var <span class="ident">writekey</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="libhoney.FieldHolder" class="name">class <span class="ident">FieldHolder</span></p>
+      
+  
+    <div class="desc"><p>A FieldHolder is the generalized class that stores fields and dynamic
+fields. It should not be used directly; only through the subclasses</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.FieldHolder', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.FieldHolder" class="source">
+    <pre><code>class FieldHolder:
+    '''A FieldHolder is the generalized class that stores fields and dynamic
+       fields. It should not be used directly; only through the subclasses'''
+
+    def __init__(self):
+        self._data = {}
+        self._dyn_fields = set()
+
+    def __add__(self, other):
+        '''adding two field holders merges the data with other overriding
+           any fields they have in common'''
+        self._data.update(other._data)
+        self._dyn_fields.update(other._dyn_fields)
+        return self
+
+    def __eq__(self, other):
+        '''two FieldHolders are equal if their datasets are equal'''
+        return ((self._data, self._dyn_fields) ==
+                (other._data, other._dyn_fields))
+
+    def __ne__(self, other):
+        '''two FieldHolders are equal if their datasets are equal'''
+        return not self.__eq__(other)
+
+    def add_field(self, name, val):
+        self._data[name] = val
+
+    def add_dynamic_field(self, fn):
+        if not inspect.isroutine(fn):
+            raise TypeError("add_dynamic_field requires function argument")
+        self._dyn_fields.add(fn)
+
+    def add(self, data):
+        try:
+            for k, v in data.items():
+                self.add_field(k, v)
+        except AttributeError:
+            raise TypeError("add requires a dict-like argument")
+
+    def is_empty(self):
+        '''returns true if there is no data in this FieldHolder'''
+        return len(self._data) == 0
+
+    def __str__(self):
+        '''returns a JSON blob of the fields in this holder'''
+        return json.dumps(self._data)
+</code></pre>
+  </div>
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="#libhoney.FieldHolder">FieldHolder</a></li>
+          <li>builtins.object</li>
+          </ul>
+          <h3>Static methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="libhoney.FieldHolder.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Initialize self.  See help(type(self)) for accurate signature.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.FieldHolder.__init__', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.FieldHolder.__init__" class="source">
+    <pre><code>def __init__(self):
+    self._data = {}
+    self._dyn_fields = set()
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.FieldHolder.add">
+    <p>def <span class="ident">add</span>(</p><p>self, data)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.FieldHolder.add', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.FieldHolder.add" class="source">
+    <pre><code>def add(self, data):
+    try:
+        for k, v in data.items():
+            self.add_field(k, v)
+    except AttributeError:
+        raise TypeError("add requires a dict-like argument")
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.FieldHolder.add_dynamic_field">
+    <p>def <span class="ident">add_dynamic_field</span>(</p><p>self, fn)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.FieldHolder.add_dynamic_field', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.FieldHolder.add_dynamic_field" class="source">
+    <pre><code>def add_dynamic_field(self, fn):
+    if not inspect.isroutine(fn):
+        raise TypeError("add_dynamic_field requires function argument")
+    self._dyn_fields.add(fn)
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.FieldHolder.add_field">
+    <p>def <span class="ident">add_field</span>(</p><p>self, name, val)</p>
+    </div>
+    
+
+    
+  
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.FieldHolder.add_field', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.FieldHolder.add_field" class="source">
+    <pre><code>def add_field(self, name, val):
+    self._data[name] = val
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+            
+  <div class="item">
+    <div class="name def" id="libhoney.FieldHolder.is_empty">
+    <p>def <span class="ident">is_empty</span>(</p><p>self)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>returns true if there is no data in this FieldHolder</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.FieldHolder.is_empty', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.FieldHolder.is_empty" class="source">
+    <pre><code>def is_empty(self):
+    '''returns true if there is no data in this FieldHolder'''
+    return len(self._data) == 0
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+      </div>
+      </div>
+      
+      <div class="item">
+      <p id="libhoney.SendError" class="name">class <span class="ident">SendError</span></p>
+      
+  
+    <div class="desc"><p>Common base class for all non-exit exceptions.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.SendError', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.SendError" class="source">
+    <pre><code>class SendError(Exception):
+    def __init__(self, *args, **kwargs):
+        Exception.__init__(self, *args, **kwargs)
+</code></pre>
+  </div>
+</div>
+
+
+      <div class="class">
+          <h3>Ancestors (in MRO)</h3>
+          <ul class="class_list">
+          <li><a href="#libhoney.SendError">SendError</a></li>
+          <li>builtins.Exception</li>
+          <li>builtins.BaseException</li>
+          <li>builtins.object</li>
+          </ul>
+          <h3>Class variables</h3>
+            <div class="item">
+            <p id="libhoney.SendError.args" class="name">var <span class="ident">args</span></p>
+            
+
+            
+  
+  <div class="source_cont">
+</div>
+
+            </div>
+          <h3>Static methods</h3>
+            
+  <div class="item">
+    <div class="name def" id="libhoney.SendError.__init__">
+    <p>def <span class="ident">__init__</span>(</p><p>self, *args, **kwargs)</p>
+    </div>
+    
+
+    
+  
+    <div class="desc"><p>Initialize self.  See help(type(self)) for accurate signature.</p></div>
+  <div class="source_cont">
+  <p class="source_link"><a href="javascript:void(0);" onclick="toggle('source-libhoney.SendError.__init__', this);">Show source &equiv;</a></p>
+  <div id="source-libhoney.SendError.__init__" class="source">
+    <pre><code>def __init__(self, *args, **kwargs):
+    Exception.__init__(self, *args, **kwargs)
+</code></pre>
+  </div>
+</div>
+
+  </div>
+  
+      </div>
+      </div>
+
+    <h2 class="section-title" id="header-submodules">Sub-modules</h2>
+      <div class="item">
+      <p class="name"><a href="transmission.m.html">libhoney.transmission</a></p>
+      
+  
+    <div class="desc"><p>Transmission handles colleting and sending individual events to Honeycomb</p></div>
+
+      </div>
+      <div class="item">
+      <p class="name"><a href="version.m.html">libhoney.version</a></p>
+      
+  
+
+      </div>
+  </section>
+
+    </article>
+  <div class="clear"> </div>
+  <footer id="footer">
+    <p>
+      Documentation generated by
+      <a href="https://github.com/BurntSushi/pdoc">pdoc 0.3.2</a>
+    </p>
+
+    <p>pdoc is in the public domain with the
+      <a href="http://unlicense.org">UNLICENSE</a></p>
+
+    <p>Design by <a href="http://nadh.in">Kailash Nadh</a></p>
+  </footer>
+</div>
+</body>
+</html>
