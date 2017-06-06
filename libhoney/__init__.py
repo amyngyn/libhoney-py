@@ -41,7 +41,8 @@ random.seed()
 
 def init(writekey="", dataset="", sample_rate=1,
          api_host="https://api.honeycomb.io", max_concurrent_batches=10,
-         block_on_send=False, block_on_response=False):
+         block_on_send=False, block_on_response=False,
+         send_interval=0):
     '''initialize libhoney and prepare it to send events to Honeycomb
     writekey: the authorization key for your team on Honeycomb. Find your team
         write key at https://ui.honeycomb.io/account
@@ -51,11 +52,12 @@ def init(writekey="", dataset="", sample_rate=1,
     block_on_send: if true, block when send queue fills. If false, drop
         events until there's room in the queue
     block_on_response: if true, block when the response queue fills. if
-        false, drop response objects.'''
+        false, drop response objects.
+    send_interval: how long to wait before sending events'''
     global _xmit, g_writekey, g_dataset, g_api_host, g_sample_rate, g_responses
     global g_block_on_response
     _xmit = transmission.Transmission(max_concurrent_batches, block_on_send,
-                                      block_on_response)
+                                      block_on_response, send_interval)
     g_writekey = writekey
     g_dataset = dataset
     g_api_host = api_host

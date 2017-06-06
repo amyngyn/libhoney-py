@@ -2,6 +2,7 @@
 
 from six.moves import queue
 from six.moves.urllib.parse import urljoin
+import json
 import threading
 import requests
 import statsd
@@ -14,10 +15,11 @@ VERSION = "unset"  # set by libhoney
 class Transmission():
 
     def __init__(self, max_concurrent_batches=10, block_on_send=False,
-                 block_on_response=False):
+                 block_on_response=False, send_interval=0):
         self.max_concurrent_batches = max_concurrent_batches
         self.block_on_send = block_on_send
         self.block_on_response = block_on_response
+        self.send_interval = send_interval
 
         session = requests.Session()
         session.headers.update({"User-Agent": "libhoney-py/"+VERSION})
@@ -64,11 +66,58 @@ class Transmission():
 
     def _sender(self):
         '''_sender is the control loop for each sending thread'''
+        last_send = get_now()
+        events = []
         while True:
             ev = self.pending.get()
             if ev is None:
+                self._send_batch(events)
                 break
-            self._send(ev)
+            if self.send_interval > 0:
+                current_time = get_now()
+                # TODO - .seconds???
+                if (current_time - last_send).seconds >= self.send_interval:
+                    self._send_batch(events)
+                    last_send = current_time
+                    events = []  # TODO(an): is this a performance/memory problem?
+                else:
+                    events.append(ev)  # TODO(an): error checking for size
+                                       # TODO(an): maybe sort by dataset here?
+            else:
+                self._send(ev)
+
+
+    # TODO(an): events vs ev is inconsistent variable name
+    # also a lot of the _send code is duplicated here because i didn't want to
+    # spend too much time refactoring during this interview
+    def _send_batch(self, events):
+        '''_send_batch should only be called from sender and sends all events
+           at once through the batch API'''
+        if not events:
+            return
+
+        # TODO(an): for interview, going to assume all of the events have the
+        # same dataset, but we should check the dataset for every individual event
+        api_host = events[0].api_host
+        writekey = events[0].writekey
+        print writekey
+        dataset = events[0].dataset
+        url = urljoin(urljoin(api_host, "1/batch/"), dataset)
+
+        # TODO(an): does json.dumps need to be extracted away like in
+        # fieldholders - i don't think so?
+        data = json.dumps([{'data': ev._fields._data} for ev in events])
+        print data
+
+        req = requests.Request('POST', url, data=data) # is the data= necessary 
+        req.headers.update({"X-Honeycomb-Team": writekey})
+        preq = self.session.prepare_request(req)
+        responses = self.session.send(preq)
+
+        # TODO(an): check for errors in all of the responses - it's an array
+        #
+        # TODO(an): send all responses to queue
+
 
     def _send(self, ev):
         '''_send should only be called from sender and sends an individual
